@@ -12,6 +12,7 @@ namespace UserMaintenance
 {
     public partial class Form1 : Form
     {
+        //BindingList<User>
         public Form1()
         {
             InitializeComponent();
