@@ -1,18 +1,27 @@
-﻿public class User
-{
-    public Guid ID { get; set; } = Guid.NewGuid();
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
-    // public string FullName => string.Format("{0} {1}", LastName, FirstName);
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-    public string Fullname
+namespace UserMaintenance.Entities
+{
+    public class User
     {
-        get
+        public Guid ID { get; set; } = Guid.NewGuid();
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        // public string FullName => string.Format("{0} {1}", LastName, FirstName);
+
+        public string Fullname
         {
-            return string.Format(
-                "{0} {1}",
-                LastName,
-                FirstName);
+            get
+            {
+                return string.Format(
+                    "{0} {1}",
+                    LastName,
+                    FirstName);
+            }
         }
     }
 }
