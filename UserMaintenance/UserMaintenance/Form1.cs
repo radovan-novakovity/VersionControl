@@ -61,7 +61,14 @@ namespace UserMaintenance
 
         private void button3_Click(object sender, EventArgs e)
         {
-            users.RemoveAt(listBox1.SelectedIndex);
+            var selectID = ((Guid)listBox1.SelectedValue);   // az ID Guid típusu
+            Console.WriteLine(selectID);
+
+            var userSelect = (from u in users
+                              where selectID == u.ID
+                              select u).FirstOrDefault(); // listát ad vissza, ezért kell a FirstOrDefault, hogy egy elemet select-teljen
+
+            users.Remove(userSelect);
         }
     }
 }
