@@ -116,7 +116,16 @@ namespace DDAZ32_Excel
             headerRange.Interior.Color = Color.LightBlue;
             headerRange.BorderAround2(Excel.XlLineStyle.xlContinuous, Excel.XlBorderWeight.xlThick);
 
-            Excel.Range tableRange = xlSheet.get_Range(GetCell(1, 1), GetCell(1, headers.Length));
+            int lastRowID = xlSheet.UsedRange.Rows.Count;
+            Excel.Range tableRange = xlSheet.get_Range(GetCell(2, 9), GetCell(lastRowID, 1));
+            tableRange.BorderAround2(Excel.XlLineStyle.xlContinuous, Excel.XlBorderWeight.xlThick);
+
+            Excel.Range firstColumnRange = xlSheet.get_Range(GetCell(2, 1), GetCell(lastRowID, 1));
+            firstColumnRange.Font.Bold = true;
+            firstColumnRange.Interior.Color = Color.LightYellow;
+
+            Excel.Range lastColumnRange = xlSheet.get_Range(GetCell(2, 9), GetCell(lastRowID, 9));
+            lastColumnRange.Interior.Color = Color.LightGreen;
         }
 
         private string GetCell(int x, int y)
