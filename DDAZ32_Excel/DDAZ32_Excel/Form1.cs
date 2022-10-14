@@ -100,7 +100,7 @@ namespace DDAZ32_Excel
                 values[counter, 5] = f.NumberOfRooms;
                 values[counter, 6] = f.FloorArea;
                 values[counter, 7] = f.Price;
-                values[counter, 8] = string.Format("={0}/{1}", GetCell(counter + 2, 8), GetCell(counter + 2, 7));
+                values[counter, 8] = string.Format("=1000000*{0}/{1}", GetCell(counter + 2, 8), GetCell(counter + 2, 7));
                 counter++;
             }
 
@@ -126,6 +126,7 @@ namespace DDAZ32_Excel
 
             Excel.Range lastColumnRange = xlSheet.get_Range(GetCell(2, 9), GetCell(lastRowID, 9));
             lastColumnRange.Interior.Color = Color.LightGreen;
+            lastColumnRange.NumberFormat = "# ##0.00";
         }
 
         private string GetCell(int x, int y)
