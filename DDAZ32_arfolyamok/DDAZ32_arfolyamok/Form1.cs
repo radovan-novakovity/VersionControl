@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 using System.Xml;
 
 namespace DDAZ32_arfolyamok
@@ -26,7 +27,10 @@ namespace DDAZ32_arfolyamok
 
             GetXMLData(GetMoneyExchangeRates());
 
+            VisualizeData();
+
             dataGridView1.DataSource = Rates;
+            chartRateData.DataSource = Rates;
         }
 
         private string GetMoneyExchangeRates()
@@ -73,6 +77,18 @@ namespace DDAZ32_arfolyamok
                     rate.Value = value / unit;
                 };
             }
+        }
+
+        private void VisualizeData()
+        {
+            var series = chartRateData.Series[0];
+            series.ChartType = SeriesChartType.Line;
+            series.XValueMember = "Date";
+            series.YValueMembers = "Value";
+            series.BorderWidth = 2;
+
+            var legend = chartRateData.Legends[0];
+            legend.Enabled = false;
         }
     }
 }
