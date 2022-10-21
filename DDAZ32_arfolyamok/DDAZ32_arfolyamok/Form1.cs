@@ -22,26 +22,24 @@ namespace DDAZ32_arfolyamok
         {
             InitializeComponent();
 
-            // var output = GetMoneyExchangeRates();
-            // GetXMLData(output);
-
-            GetXMLData(GetMoneyExchangeRates());
-
-            VisualizeData();
-
-            dataGridView1.DataSource = Rates;
-            chartRateData.DataSource = Rates;
+            RefreshData();
         }
-
+        // 3. feladat
         private string GetMoneyExchangeRates()
         {
             var mnbService = new MNBArfolyamServiceSoapClient();
 
             var request = new GetExchangeRatesRequestBody()
             {
-                currencyNames = "EUR",
-                startDate = "2020-01-01",
-                endDate = "2020-06-30"
+                //currencyNames = "EUR",
+                // 7. feladat
+                currencyNames = comboBox1.SelectedItem.ToString(),
+                //startDate = "2020-01-01",
+                // 7. feladat
+                startDate = Convert.ToString(dateTimePicker1.Value),
+                //endDate = "2020-06-30"
+                // 7. feladat
+                endDate = Convert.ToString(dateTimePicker2.Value)
             };
 
             var response = mnbService.GetExchangeRates(request);
@@ -51,6 +49,7 @@ namespace DDAZ32_arfolyamok
             return result;
         }
 
+        // 5. feladat
         private void GetXMLData(string result)
         {
             GetMoneyExchangeRates();
@@ -79,6 +78,7 @@ namespace DDAZ32_arfolyamok
             }
         }
 
+        // 6. feladat
         private void VisualizeData()
         {
             var series = chartRateData.Series[0];
@@ -94,6 +94,35 @@ namespace DDAZ32_arfolyamok
             chartArea.AxisX.MajorGrid.Enabled = false;
             chartArea.AxisY.MajorGrid.Enabled = false;
             chartArea.AxisY.IsStartedFromZero = false;
+        }
+
+        private void RefreshData()
+        {
+            Rates.Clear();
+
+            // var output = GetMoneyExchangeRates();
+            // GetXMLData(output);
+            GetXMLData(GetMoneyExchangeRates());
+
+            VisualizeData();
+
+            dataGridView1.DataSource = Rates;
+            chartRateData.DataSource = Rates;
+        }
+
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
+            RefreshData();
+        }
+
+        private void dateTimePicker2_ValueChanged(object sender, EventArgs e)
+        {
+            RefreshData();
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            RefreshData();
         }
     }
 }

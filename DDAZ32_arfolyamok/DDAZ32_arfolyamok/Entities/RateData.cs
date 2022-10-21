@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace DDAZ32_arfolyamok.Entities
 {
+    // 4. feladat
     class RateData
     {
         public DateTime Date { get; set; }
