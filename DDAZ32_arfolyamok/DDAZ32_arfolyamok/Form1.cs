@@ -89,6 +89,11 @@ namespace DDAZ32_arfolyamok
 
             var legend = chartRateData.Legends[0];
             legend.Enabled = false;
+
+            var chartArea = chartRateData.ChartAreas[0];
+            chartArea.AxisX.MajorGrid.Enabled = false;
+            chartArea.AxisY.MajorGrid.Enabled = false;
+            chartArea.AxisY.IsStartedFromZero = false;
         }
     }
 }
