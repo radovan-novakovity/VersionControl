@@ -17,43 +17,46 @@ namespace DDAZ32_arfolyamok
     public partial class Form1 : Form
     {
         BindingList<RateData> Rates = new BindingList<RateData>();
-        
+
+        BindingList<string> Currencies = new BindingList<string>();
+
         public Form1()
         {
             InitializeComponent();
 
+            GetXMLData(GetCurrencies());
+            
+
             RefreshData();
         }
         // 3. feladat
-        private string GetMoneyExchangeRates()
-        {
-            var mnbService = new MNBArfolyamServiceSoapClient();
+        //private string GetMoneyExchangeRates()
+        //{
+        //    var mnbService = new MNBArfolyamServiceSoapClient();
 
-            var request = new GetExchangeRatesRequestBody()
-            {
-                //currencyNames = "EUR",
-                // 7. feladat
-                currencyNames = comboBox1.SelectedItem.ToString(),
-                //startDate = "2020-01-01",
-                // 7. feladat
-                startDate = Convert.ToString(dateTimePicker1.Value),
-                //endDate = "2020-06-30"
-                // 7. feladat
-                endDate = Convert.ToString(dateTimePicker2.Value)
-            };
+        //    var request = new GetExchangeRatesRequestBody()
+        //    {
+        //        //currencyNames = "EUR",
+        //        // 7. feladat
+        //        currencyNames = comboBox1.SelectedItem.ToString(),
+        //        //startDate = "2020-01-01",
+        //        // 7. feladat
+        //        startDate = Convert.ToString(dateTimePicker1.Value),
+        //        //endDate = "2020-06-30"
+        //        // 7. feladat
+        //        endDate = Convert.ToString(dateTimePicker2.Value)
+        //    };
 
-            var response = mnbService.GetExchangeRates(request);
+        //    var response = mnbService.GetExchangeRates(request);
 
-            var result = response.GetExchangeRatesResult;
+        //    var result = response.GetExchangeRatesResult;
 
-            return result;
-        }
+        //    return result;
+        //}
 
         // 5. feladat
         private void GetXMLData(string result)
         {
-            GetMoneyExchangeRates();
-
             XmlDocument xml = new XmlDocument();
             xml.LoadXml(result);
 
@@ -65,16 +68,20 @@ namespace DDAZ32_arfolyamok
                 rate.Date = DateTime.Parse(element.GetAttribute("date"));
 
                 var childElement = (XmlElement)element.ChildNodes[0];
+
+                if (childElement == null)
+                    continue;
+
                 rate.Currency = childElement.GetAttribute("curr");
+
+                Currencies.Add(childElement.InnerText);
+
+                
 
                 var unit = decimal.Parse(childElement.GetAttribute("unit"));
                 var value = decimal.Parse(childElement.InnerText);
-
-                // Ez a rész a HUF miatt van
-                if (unit != 0) 
-                {
+                if (unit != 0)
                     rate.Value = value / unit;
-                };
             }
         }
 
@@ -96,18 +103,22 @@ namespace DDAZ32_arfolyamok
             chartArea.AxisY.IsStartedFromZero = false;
         }
 
+        // 7. feladat
         private void RefreshData()
         {
             Rates.Clear();
 
             // var output = GetMoneyExchangeRates();
             // GetXMLData(output);
-            GetXMLData(GetMoneyExchangeRates());
+
+            // GetXMLData(GetMoneyExchangeRates());
 
             VisualizeData();
 
             dataGridView1.DataSource = Rates;
             chartRateData.DataSource = Rates;
+            comboBox1.DataSource = Currencies;
+
         }
 
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
@@ -123,6 +134,27 @@ namespace DDAZ32_arfolyamok
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             RefreshData();
+        }
+
+        // 8. feladat
+        private string GetCurrencies()
+        {
+            var mnbService = new MNBArfolyamServiceSoapClient();
+
+            var request = new GetExchangeRatesRequestBody()
+            {
+                currencyNames = comboBox1.SelectedItem.ToString(),
+                startDate = Convert.ToString(dateTimePicker1.Value),
+                endDate = Convert.ToString(dateTimePicker2.Value)
+            };
+
+            var response = mnbService.GetExchangeRates(request);
+
+            var result = response.GetExchangeRatesResult;
+
+            return result;
+
+            
         }
     }
 }
