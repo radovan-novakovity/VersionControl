@@ -23,9 +23,8 @@ namespace DDAZ32_arfolyamok
         public Form1()
         {
             InitializeComponent();
-            GetXMLData(GetCurrencies2());
+            GetCurrencies();
             RefreshData();
-            VisualizeData();
 
         }
         // 3. feladat
@@ -35,7 +34,7 @@ namespace DDAZ32_arfolyamok
 
             var request = new GetExchangeRatesRequestBody()
             {
-                //currencyNames = "EUR",
+                //currencyNames = result,
                 // 7. feladat
                 //currencyNames = comboBox1.SelectedItem.ToString(),
                 //startDate = "2020-01-01",
@@ -68,11 +67,12 @@ namespace DDAZ32_arfolyamok
 
                 var childElement = (XmlElement)element.ChildNodes[0];
 
-                //rate.Currency = childElement.GetAttribute("curr");
                 if (childElement == null)
                     continue;
 
-                Currencies.Add(childElement.GetAttribute("curr"));
+                rate.Currency = childElement.GetAttribute("curr");
+
+                //Currencies.Add(childElement.GetAttribute("curr"));
 
                 //foreach (XmlNode chelement in childElement)
                 //{
@@ -84,7 +84,7 @@ namespace DDAZ32_arfolyamok
                 if (unit != 0)
                     rate.Value = value / unit;
             }
-            
+
         }
 
         // 6. feladat
@@ -114,7 +114,8 @@ namespace DDAZ32_arfolyamok
             // GetXMLData(output);
 
             // GetXMLData(GetMoneyExchangeRates());
-
+            GetXMLData(GetMoneyExchangeRates());
+            VisualizeData();
             dataGridView1.DataSource = Rates;
             chartRateData.DataSource = Rates;
             comboBox1.DataSource = Currencies;
@@ -136,21 +137,18 @@ namespace DDAZ32_arfolyamok
             RefreshData();
         }
 
-        // 8. feladat
-        private string GetCurrencies2()
+        //8. feladat
+        private string GetCurrencies()
         {
             var mnbService = new MNBArfolyamServiceSoapClient();
 
-            var request = new GetCurrenciesRequestBody()
-            {
-
-            };
+            var request = new GetCurrenciesRequestBody();
 
             var response = mnbService.GetCurrencies(request);
 
-            var result = response.GetCurrenciesResult;
+            var result2 = response.GetCurrenciesResult;
 
-            return result;     
+            return result2;
         }
     }
 }
