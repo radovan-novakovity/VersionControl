@@ -23,7 +23,7 @@ namespace DDAZ32_arfolyamok
         public Form1()
         {
             InitializeComponent();
-            GetCurrencies();
+            GetXMLData2(GetCurrencies()); // 8. feladat
             RefreshData();
 
         }
@@ -34,12 +34,14 @@ namespace DDAZ32_arfolyamok
 
             var request = new GetExchangeRatesRequestBody()
             {
-                //currencyNames = result,
+                //currencyNames = GetCurrencies(),
                 // 7. feladat
-                //currencyNames = Convert.ToString(Currencies),
+                currencyNames = Convert.ToString(comboBox1.SelectedItem),
+
                 //startDate = "2020-01-01",
                 // 7. feladat
                 startDate = Convert.ToString(dateTimePicker1.Value),
+
                 //endDate = "2020-06-30"
                 // 7. feladat
                 endDate = Convert.ToString(dateTimePicker2.Value)
@@ -66,23 +68,12 @@ namespace DDAZ32_arfolyamok
                 rate.Date = DateTime.Parse(element.GetAttribute("date"));
 
                 var childElement = (XmlElement)element.ChildNodes[0];
-
+                
                 if (childElement == null)
                     continue;
 
-                foreach (XmlElement item in childElement)
-                {
-                    Currencies.Add(item.InnerText);
-                }
+                rate.Currency = childElement.GetAttribute("curr");
 
-                
-
-                //Currencies.Add(childElement.GetAttribute("curr"));
-
-                //foreach (XmlNode chelement in childElement)
-                //{
-                //    Currencies.Add(chelement.Attributes.Item);
-                //}
 
                 var unit = decimal.Parse(childElement.GetAttribute("unit"));
                 var value = decimal.Parse(childElement.InnerText);
@@ -90,6 +81,20 @@ namespace DDAZ32_arfolyamok
                     rate.Value = value / unit;
             }
 
+        }
+        // 8. feladat
+        private void GetXMLData2(string result2)
+        {
+            XmlDocument xml = new XmlDocument();
+            xml.LoadXml(result2);
+
+            foreach (XmlElement element in xml.DocumentElement)
+            {
+                foreach (XmlElement childElement in element.ChildNodes)
+                {
+                    Currencies.Add(childElement.InnerText);
+                }
+            }
         }
 
         // 6. feladat
@@ -119,12 +124,13 @@ namespace DDAZ32_arfolyamok
             // GetXMLData(output);
 
             // GetXMLData(GetMoneyExchangeRates());
-            GetXMLData(GetMoneyExchangeRates());
+            
             VisualizeData();
+            
             dataGridView1.DataSource = Rates;
             chartRateData.DataSource = Rates;
             comboBox1.DataSource = Currencies;
-
+            GetXMLData(GetMoneyExchangeRates());
         }
 
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
@@ -143,7 +149,7 @@ namespace DDAZ32_arfolyamok
         }
 
         //8. feladat
-        private void GetCurrencies()
+        private string GetCurrencies()
         {
             var mnbService = new MNBArfolyamServiceSoapClient();
 
@@ -153,11 +159,7 @@ namespace DDAZ32_arfolyamok
 
             var result2 = response.GetCurrenciesResult;
 
-            Currencies.Add(result2 as string);
-            //foreach (var r in result2)
-            //{
-            //    //Currencies.Add(Convert.ToString(r).Split("");
-            //}
+            return result2;
         }
     }
 }
