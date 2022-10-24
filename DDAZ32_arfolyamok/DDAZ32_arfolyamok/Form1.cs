@@ -36,7 +36,7 @@ namespace DDAZ32_arfolyamok
             {
                 //currencyNames = result,
                 // 7. feladat
-                currencyNames = Convert.ToString(Currencies),
+                //currencyNames = Convert.ToString(Currencies),
                 //startDate = "2020-01-01",
                 // 7. feladat
                 startDate = Convert.ToString(dateTimePicker1.Value),
@@ -70,7 +70,12 @@ namespace DDAZ32_arfolyamok
                 if (childElement == null)
                     continue;
 
-                rate.Currency = childElement.GetAttribute("curr");
+                foreach (XmlElement item in childElement)
+                {
+                    Currencies.Add(item.InnerText);
+                }
+
+                
 
                 //Currencies.Add(childElement.GetAttribute("curr"));
 
@@ -149,10 +154,10 @@ namespace DDAZ32_arfolyamok
             var result2 = response.GetCurrenciesResult;
 
             Currencies.Add(result2 as string);
-            foreach (var r in result2)
-            {
-                Currencies.Add(Convert.ToString(r));
-            }
+            //foreach (var r in result2)
+            //{
+            //    //Currencies.Add(Convert.ToString(r).Split("");
+            //}
         }
     }
 }
