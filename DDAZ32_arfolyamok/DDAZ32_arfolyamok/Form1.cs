@@ -36,7 +36,7 @@ namespace DDAZ32_arfolyamok
             {
                 //currencyNames = result,
                 // 7. feladat
-                //currencyNames = comboBox1.SelectedItem.ToString(),
+                currencyNames = Convert.ToString(Currencies),
                 //startDate = "2020-01-01",
                 // 7. feladat
                 startDate = Convert.ToString(dateTimePicker1.Value),
@@ -138,7 +138,7 @@ namespace DDAZ32_arfolyamok
         }
 
         //8. feladat
-        private string GetCurrencies()
+        private void GetCurrencies()
         {
             var mnbService = new MNBArfolyamServiceSoapClient();
 
@@ -148,7 +148,11 @@ namespace DDAZ32_arfolyamok
 
             var result2 = response.GetCurrenciesResult;
 
-            return result2;
+            Currencies.Add(result2 as string);
+            foreach (var r in result2)
+            {
+                Currencies.Add(Convert.ToString(r));
+            }
         }
     }
 }
