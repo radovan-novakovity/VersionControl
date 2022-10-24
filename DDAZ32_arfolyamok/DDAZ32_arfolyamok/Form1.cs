@@ -23,36 +23,35 @@ namespace DDAZ32_arfolyamok
         public Form1()
         {
             InitializeComponent();
-
-            GetXMLData(GetCurrencies());
-            
-
+            GetXMLData(GetCurrencies2());
             RefreshData();
+            VisualizeData();
+
         }
         // 3. feladat
-        //private string GetMoneyExchangeRates()
-        //{
-        //    var mnbService = new MNBArfolyamServiceSoapClient();
+        private string GetMoneyExchangeRates()
+        {
+            var mnbService = new MNBArfolyamServiceSoapClient();
 
-        //    var request = new GetExchangeRatesRequestBody()
-        //    {
-        //        //currencyNames = "EUR",
-        //        // 7. feladat
-        //        currencyNames = comboBox1.SelectedItem.ToString(),
-        //        //startDate = "2020-01-01",
-        //        // 7. feladat
-        //        startDate = Convert.ToString(dateTimePicker1.Value),
-        //        //endDate = "2020-06-30"
-        //        // 7. feladat
-        //        endDate = Convert.ToString(dateTimePicker2.Value)
-        //    };
+            var request = new GetExchangeRatesRequestBody()
+            {
+                //currencyNames = "EUR",
+                // 7. feladat
+                //currencyNames = comboBox1.SelectedItem.ToString(),
+                //startDate = "2020-01-01",
+                // 7. feladat
+                startDate = Convert.ToString(dateTimePicker1.Value),
+                //endDate = "2020-06-30"
+                // 7. feladat
+                endDate = Convert.ToString(dateTimePicker2.Value)
+            };
 
-        //    var response = mnbService.GetExchangeRates(request);
+            var response = mnbService.GetExchangeRates(request);
 
-        //    var result = response.GetExchangeRatesResult;
+            var result = response.GetExchangeRatesResult;
 
-        //    return result;
-        //}
+            return result;
+        }
 
         // 5. feladat
         private void GetXMLData(string result)
@@ -69,20 +68,23 @@ namespace DDAZ32_arfolyamok
 
                 var childElement = (XmlElement)element.ChildNodes[0];
 
+                //rate.Currency = childElement.GetAttribute("curr");
                 if (childElement == null)
                     continue;
 
-                rate.Currency = childElement.GetAttribute("curr");
+                Currencies.Add(childElement.GetAttribute("curr"));
 
-                Currencies.Add(childElement.InnerText);
-
-                
+                //foreach (XmlNode chelement in childElement)
+                //{
+                //    Currencies.Add(chelement.Attributes.Item);
+                //}
 
                 var unit = decimal.Parse(childElement.GetAttribute("unit"));
                 var value = decimal.Parse(childElement.InnerText);
                 if (unit != 0)
                     rate.Value = value / unit;
             }
+            
         }
 
         // 6. feladat
@@ -113,8 +115,6 @@ namespace DDAZ32_arfolyamok
 
             // GetXMLData(GetMoneyExchangeRates());
 
-            VisualizeData();
-
             dataGridView1.DataSource = Rates;
             chartRateData.DataSource = Rates;
             comboBox1.DataSource = Currencies;
@@ -137,24 +137,20 @@ namespace DDAZ32_arfolyamok
         }
 
         // 8. feladat
-        private string GetCurrencies()
+        private string GetCurrencies2()
         {
             var mnbService = new MNBArfolyamServiceSoapClient();
 
-            var request = new GetExchangeRatesRequestBody()
+            var request = new GetCurrenciesRequestBody()
             {
-                currencyNames = comboBox1.SelectedItem.ToString(),
-                startDate = Convert.ToString(dateTimePicker1.Value),
-                endDate = Convert.ToString(dateTimePicker2.Value)
+
             };
 
-            var response = mnbService.GetExchangeRates(request);
+            var response = mnbService.GetCurrencies(request);
 
-            var result = response.GetExchangeRatesResult;
+            var result = response.GetCurrenciesResult;
 
-            return result;
-
-            
+            return result;     
         }
     }
 }

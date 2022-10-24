@@ -29,9 +29,9 @@ namespace DDAZ32_arfolyamok
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea11 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend11 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series11 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.chartRateData = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
@@ -51,16 +51,16 @@ namespace DDAZ32_arfolyamok
             // 
             // chartRateData
             // 
-            chartArea11.Name = "ChartArea1";
-            this.chartRateData.ChartAreas.Add(chartArea11);
-            legend11.Name = "Legend1";
-            this.chartRateData.Legends.Add(legend11);
+            chartArea5.Name = "ChartArea1";
+            this.chartRateData.ChartAreas.Add(chartArea5);
+            legend5.Name = "Legend1";
+            this.chartRateData.Legends.Add(legend5);
             this.chartRateData.Location = new System.Drawing.Point(438, 38);
             this.chartRateData.Name = "chartRateData";
-            series11.ChartArea = "ChartArea1";
-            series11.Legend = "Legend1";
-            series11.Name = "Series1";
-            this.chartRateData.Series.Add(series11);
+            series5.ChartArea = "ChartArea1";
+            series5.Legend = "Legend1";
+            series5.Name = "Series1";
+            this.chartRateData.Series.Add(series5);
             this.chartRateData.Size = new System.Drawing.Size(648, 497);
             this.chartRateData.TabIndex = 1;
             this.chartRateData.Text = "chart1";
