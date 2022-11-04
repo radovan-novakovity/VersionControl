@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31424.327
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DDAZ32_gyar", "DDAZ32_gyar\DDAZ32_gyar.csproj", "{3EE5E10E-06ED-4AA0-AC28-BA4828ED4AEF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3EE5E10E-06ED-4AA0-AC28-BA4828ED4AEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3EE5E10E-06ED-4AA0-AC28-BA4828ED4AEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3EE5E10E-06ED-4AA0-AC28-BA4828ED4AEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3EE5E10E-06ED-4AA0-AC28-BA4828ED4AEF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {75F8C565-2834-4A80-A279-D09898F16B1C}
+	EndGlobalSection
+EndGlobal
