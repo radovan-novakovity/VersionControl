@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DDAZ32_gyar.Enteties
 {
-    public class CarFactory : IToyFactory
+    public class CarFactory
     {
         //public Toy CreateNew()
         //{
