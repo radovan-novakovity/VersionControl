@@ -91,6 +91,9 @@ namespace DDAZ32_gyar
             var colorPicker = new ColorDialog();
 
             colorPicker.Color = button3.BackColor;
+            if (colorPicker.ShowDialog() != DialogResult.OK)
+                return;
+            button.BackColor = colorPicker.Color;
         }
     }
 }
