@@ -30,7 +30,7 @@ namespace DDAZ32_gyar
         public Form1()
         {
             InitializeComponent();
-            //Factory = new CarFactory();
+            Factory = new CarFactory();
             //Factory = new BallFactory();
         }
 
@@ -38,6 +38,7 @@ namespace DDAZ32_gyar
         {
             var toy = Factory.CreateNew();
             toy.Left = -toy.Width;
+            toy.Top = 200;
             _toys.Add(toy);
             mainPanel.Controls.Add(toy);
         }
@@ -76,8 +77,20 @@ namespace DDAZ32_gyar
         {
             if (_nextToy != null)
             {
-                Controls.Remove(_nextToy);
+                mainPanel.Controls.Remove(_nextToy);
             }
+            _nextToy = Factory.CreateNew();
+            _nextToy.Top = label1.Top + label1.Height + 20;
+            _nextToy.Left = label1.Left;
+            mainPanel.Controls.Add(_nextToy);
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            var button = (Button)sender;
+            var colorPicker = new ColorDialog();
+
+            colorPicker.Color = button3.BackColor;
         }
     }
 }
