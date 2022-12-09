@@ -20,6 +20,9 @@ namespace DDAZ32_algo
             InitializeComponent();
             ga = gc.ActivateDisplay();
             this.Controls.Add(ga);
+
+            gc.AddPlayer();
+            gc.Start(true);
         }
     }
 }
